@@ -6,11 +6,14 @@ const cors = require('cors');
 require("dotenv").config();
 
 const PORT = process.env.PORT || 5000
-
 app.use(cors({
-    origin: 'http://localhost:3000',   //its my react app url
+    origin: [
+        'http://localhost:3000',
+        'https://youtube-india-akash.netlify.app'
+    ],
     credentials: true
-}))
+}));
+
 
 app.use(cookieParser());
 app.use(express.json());
