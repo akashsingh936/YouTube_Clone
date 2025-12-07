@@ -27,6 +27,7 @@ build/
 coverage/
 
 # Optional: dotenv example
+.env
 .env.local
 .env.development
 .env.test

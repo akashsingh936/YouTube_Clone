@@ -1,13 +1,13 @@
 const User = require('../Modals/user');
 const bcrypt = require('bcryptjs');
-  const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+require("dotenv").config();
 
-
-  const cookieOptions ={
+const cookieOptions = {
     httpOnly: true,
     secure: false, //set t true in production
     sameSite: 'Lax'
-  }
+}
 
 exports.signUp = async (req, res) => {
     try {
@@ -33,10 +33,10 @@ exports.signIn = async (req, res) => {
         const user = await User.findOne({ userName });
         if (user && await bcrypt.compare(password, user.password)) {
 
-             const token = jwt.sign({userId: user._id}, 'Its_My_Secret_Key' );
-             res.cookie('token', token, cookieOptions)
-             console.log(token);
-            res.json({ message: 'Logged in successfully', success: "true",token,user });
+            const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+            res.cookie('token', token, cookieOptions)
+            console.log(token);
+            res.json({ message: 'Logged in successfully', success: "true", token, user });
         } else {
             res.status(400).json({ error: 'Invalid credentials' });
         }
@@ -48,6 +48,6 @@ exports.signIn = async (req, res) => {
 
 
 
-exports.logout = async(req,res)=>{
+exports.logout = async (req, res) => {
     res.clearCookie('token', cookieOptions).json({ message: 'Logged out successfully' });
 }
