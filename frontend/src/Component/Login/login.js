@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import './login.css';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import { BASE_URL } from '../../App';
+import axiosInstance from '../../config';
 
 
 
@@ -25,7 +25,7 @@ const Login = ({ setLoginModel }) => {
 
     const handleLoginFun = async () => {
         setLoader(true)
-        axios.axiosInstance(`/auth/logIn`, loginField, { withCredentials: true }).then((response) => {
+        axiosInstance.post(`/auth/logIn`, loginField, { withCredentials: true }).then((response) => {
             setLoader(false)
              localStorage.setItem("token", response.data.token);
              
