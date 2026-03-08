@@ -11,6 +11,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Login from '../Login/login';
 import axios from 'axios';
 import { BASE_URL } from '../../App';
+import axiosInstance from '../../config';
 
 const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
     const [userPic, setUserPic] = useState("https://www.pngkey.com/png/detail/114-1149847_avatar-unknown-dp.png")
@@ -28,7 +29,7 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
     }
 
     const handleprofile = () => {
-        let userId = sessionStorage.getItem("userId")
+        let userId = localStorage.getItem("userId")
         navigate(`/user/${userId}`);
         setNavbarModel(false);
     }
@@ -42,7 +43,7 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
         if (button === "login") {
             setLogin(true);
         } else {
-            sessionStorage.clear();
+            localStorage.clear();
             getLogoutFun();
             setTimeout(() =>{
                 navigate('/')
@@ -52,7 +53,7 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
     }
 
     const getLogoutFun = async() =>{
-        axios.post(`${BASE_URL}/auth/logout`,{},{withCredentials: true}).then((response) =>{
+        axiosInstance.post(`/auth/logout`,{},{withCredentials: true}).then((response) =>{
             console.log("Logout")
         }).catch (error =>{
             console.log(error);
@@ -61,12 +62,12 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
 
 
     useEffect(() => {
-        let userProfilePic = sessionStorage.getItem("userProfilePic");
-        setIsLogedIn(sessionStorage.getItem("userId") !== null ? true : false);
+        let userProfilePic = localStorage.getItem("userProfilePic");
+        setIsLogedIn(localStorage.getItem("userId") !== null ? true : false);
         if (userProfilePic !== null) {
             setUserPic(userProfilePic)
         }
-    }, [])
+    }, [login])
 
     return (
         <div className='navbar'>

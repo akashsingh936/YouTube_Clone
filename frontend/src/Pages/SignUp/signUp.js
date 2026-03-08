@@ -7,6 +7,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import { BASE_URL } from '../../App';
+import axiosInstance from '../../config';
 
 
 const SignUp = () => {
@@ -52,7 +53,7 @@ const SignUp = () => {
 
   const handleSignup = async () => {
     setProgressBar(true);
-    axios.post(`${BASE_URL}/auth/signup`, signUpField).then((res) => {
+    axiosInstance.post(`/auth/signup`, signUpField).then((res) => {
       console.log(res);
       toast.success(res.data.data.message);
        setProgressBar(false);

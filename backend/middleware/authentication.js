@@ -4,7 +4,16 @@ require("dotenv").config();
 
 const auth = async (req, res, next) => {
 
-    const token = req.cookies.token;
+    // const token = req.cookies.token;
+    // const token = req.headers;
+    // console.log(token);
+    const authHeader = req.headers.authorization;
+
+    let token;
+
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+        token = authHeader.split(" ")[1];
+    }
     console.log("token", token);
     if (!token) {
         return res.status(401).json({ error: 'No token, authorization denied' });

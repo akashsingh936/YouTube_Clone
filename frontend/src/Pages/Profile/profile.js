@@ -5,6 +5,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../../App';
+import axiosInstance from '../../config';
 
 
 
@@ -16,14 +17,14 @@ const Profile = (sideNavbar) => {
     const [user, setUser] = useState(null);
 
     const fetchProfileData = async () => {
-        axios.get(`${BASE_URL}/api/${id}/channel`)
-        .then((response) => {
-            console.log(response)
-            setData(response.data.video)
-            setUser(response.data.video[0]?.user)
-        }).catch(error => {
-            console.log(error);
-        })
+        axiosInstance.get(`${BASE_URL}/api/${id}/channel`)
+            .then((response) => {
+                console.log(response)
+                setData(response.data.video)
+                setUser(response.data.video[0]?.user)
+            }).catch(error => {
+                console.log(error);
+            })
 
 
     }
@@ -62,26 +63,27 @@ const Profile = (sideNavbar) => {
                     <div className='profileVideos'>
 
                         {
-                            data.map((item, kay)=>{
-                                return(
-                                        <Link to={`/watch/${item._id}`} className=' profileVideo_block'>
-                            <div className='profileVideo_block_thumbnail'>
-                                <img className='profileVideo_block_thumbnail_img' src={item?.thumbanil} alt="" />
-                            </div>
+                            data.map((item, kay) => {
+                                console.log("Aman", item)
+                                return (
+                                    <Link to={`/watch/${item._id}`} className=' profileVideo_block'>
+                                        <div className='profileVideo_block_thumbnail'>
+                                            <img className='profileVideo_block_thumbnail_img' src={item?.thumbnail} alt="" />
+                                        </div>
 
-                            <div className='profileVideo_block_detail'>
-                                <div className='profileVideo_blck_detail_name'>{item?.title}</div>
-                                <div className='profileVideo_block_detail_about'>Create at{item?.createdAt.slice(0,10)}</div>
-                            </div>
-                        </Link>
+                                        <div className='profileVideo_block_detail'>
+                                            <div className='profileVideo_blck_detail_name'>{item?.title}</div>
+                                            <div className='profileVideo_block_detail_about'>Create at{item?.createdAt.slice(0, 10)}</div>
+                                        </div>
+                                    </Link>
                                 );
                             })
                         }
-                      
 
- 
 
- 
+
+
+
 
                     </div>
                 </div>

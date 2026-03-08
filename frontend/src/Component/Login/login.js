@@ -22,13 +22,15 @@ const Login = ({ setLoginModel }) => {
         })
     }
 
+
     const handleLoginFun = async () => {
         setLoader(true)
-        axios.post(`${BASE_URL}/auth/logIn`, loginField, { withCredentials: true }).then((response) => {
+        axios.axiosInstance(`/auth/logIn`, loginField, { withCredentials: true }).then((response) => {
             setLoader(false)
-            sessionStorage.setItem("token", response.data.token);
-            sessionStorage.setItem("userId", response.data.user._id)
-            sessionStorage.setItem("userProfilePic", response.data.user.profilePic)
+             localStorage.setItem("token", response.data.token);
+             
+            localStorage.setItem("userId", response.data.user._id)
+            localStorage.setItem("userProfilePic", response.data.user.profilePic)
             window.location.reload();
         }).catch(error => {
             toast.error("invalid Credentials")
@@ -55,7 +57,7 @@ const Login = ({ setLoginModel }) => {
 
                     <div className='login_buttons'>
                         <div className='login-btn' onClick={handleLoginFun}>Login</div>
-                        <Link to={'/signup'} onClick={() => setLoginModel()} className='login-btn'>Signup</Link>
+                        <Link to={'/signup'} onClick={() => setLoginModel()} className='login-btn'>Login</Link>
                         <div className='login-btn' onClick={() => setLoginModel()}>Cancel</div>
                     </div>
 

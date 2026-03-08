@@ -3,6 +3,7 @@ import './homePage.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../../App';
+import axiosInstance from '../../config';
 const HomePage = ({ sideNavbar }) => {
 
   const [data, setData] = useState([]);
@@ -11,21 +12,20 @@ const HomePage = ({ sideNavbar }) => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${BASE_URL}/api/allVideo`).then(res => {
+    axiosInstance.get(`${BASE_URL}/api/allVideo`).then(res => {
 
       // console.log("backend Data",res.data.videos);
       setData(res.data.videos);
       // console.log(res);
       setLoading(false)
     }).catch(error => {
-      // console.log({error: error.message})
       setError(error.message)
       setLoading(false)
     })
   }, []);
 
   const options = ["All", "Twenty20", "Music", "Live", "Mixes", "Gaming", "Detabase", "Pawan Singh", "Democracy", "Comedy", "Live IPL", "Trending Song", "New Songs", "Honey singh", "Pawan Singh",];
-  // console.log("render me data:", data)
+   
   return (
     <div className={sideNavbar ? 'homePage' : 'fullHomePage'}>
 

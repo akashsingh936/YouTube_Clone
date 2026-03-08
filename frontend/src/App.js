@@ -16,14 +16,6 @@ export const BASE_URL = process.env.REACT_APP_API_URL;
 function App() {
   const [sideNavbar, setSideNavbar] = useState(true);
 
-
-  // useEffect(()=>{
-  //      axios.get(`${BASE_URL}/api/allVideo`).then(res=>{
-  //       console.log(res);
-  //      }).catch(error=>{
-  //       console.log(error)
-  //      })
-  // },[])
   
 
   const setSideNavbarFunc = (value) => {

@@ -9,7 +9,7 @@
 .homePage {
     display: flex;
     flex-direction: column;
-    
+    position: fixed;
     flex: 1;
     margin-left: 274px;
     min-height: 100vh;
@@ -54,7 +54,13 @@
     background-color: black;
     box-sizing: border-box;
     gap: 10px;
-    grid-template-columns: 384px 384px 384px;
+    grid-template-columns: 340px 384px 384px;
+
+
+    /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */
+
+
     padding: 90px 0 20px 0;
     height: 100vh;
 }
@@ -81,7 +87,7 @@
     width: 100%;
     position: relative;
     box-sizing: border-box;
-    height: 216px;
+    height: 180px;
 
 }
 .youtube_thumbnailPic{
@@ -106,7 +112,9 @@
     padding-top: 10px;
 }
 .youtube_thumbnail_profile{
-    width: 80%px;
+    width: 80%;
+
+
     height: 50px;
      border-radius: 100%;
     display: flex;
@@ -135,10 +143,11 @@
 }
 .youtube_channelName{
     margin-top: 5px;
-    font-size: 18px;
+    font-size: 14px;
     color: rgb(170,170,170);
 }
 .youtubeVideo_views{
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 00;
     color: rgb(170,170,170);
 }

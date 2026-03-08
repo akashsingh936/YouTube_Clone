@@ -7,6 +7,7 @@ import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { BASE_URL } from '../../App';
+import axiosInstance from '../../config';
 const VideoUpload = () => {
     const [inputField, setInputField] = useState({ "title": "", "description": "", "videoLink": "", "thumbnail": "", "videoType": "" })
     const [loader, setLoader] = useState(false);
@@ -48,29 +49,62 @@ const VideoUpload = () => {
 
 
     useEffect(() => {
-        let isLogin = sessionStorage.getItem("userId");
+        let isLogin = localStorage.getItem("userId");
         if (isLogin === null) {
             navigate('/')
         }
     }, [])
 
 
-    console.log(inputField)
+    
+    // const handleSubmitFunc = async () => {
+    //     setLoader(true)
+    //    await axiosInstance.post(`/api/video`,inputField,{withCredentials:true}).then((response)=>{
+    //       const token = localStorage.getItem("token");
+
+    //     setLoader(false)
+    //      navigate('/')
+    //    }).catch(error =>{
+    //     console.log(error)
+    //      setLoader(false)
+    //    })
+
+    // }
+
+
+
+
+
+
+
     const handleSubmitFunc = async () => {
-        setLoader(true)
-       await axios.post(`${BASE_URL}/api/video`,inputField,{withCredentials:true}).then((response)=>{
-        console.log(response)
-        setLoader(false)
-         navigate('/')
-       }).catch(error =>{
-        console.log(error)
-         setLoader(false)
-       })
+    setLoader(true);
 
+    const token = localStorage.getItem("token");   // ✅ localStorage se token lo
+
+    try {
+        await axiosInstance.post(
+            `/api/video`,
+            inputField,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`   // ✅ Bearer me bhejo
+                }
+            }
+        );
+
+        navigate('/');
+
+    } catch (error) {
+        console.log(error);
+    } finally {
+        setLoader(false);
     }
+};
 
 
-    console.log(inputField)
+
+    
     return (
         <div className='videoUpload'>
             <div className="uploadBox">

@@ -7,6 +7,7 @@ import { useparams } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { BASE_URL } from '../../../App';
+import axiosInstance from '../../../config';
 // import { getCommentByVideoId } from '../../../../../Controllers/comment';
 const Video = () => {
     const [message, setMessage] = useState("");
@@ -18,7 +19,7 @@ const Video = () => {
 
 
     const fetchVideoById = async () => {
-        await axios.get(`${BASE_URL}/api/getVideoById/${id}`).then((response) => {
+        await axiosInstance.get(`/api/getVideoById/${id}`).then((response) => {
             console.log(response);
             setData(response.data.video);
             setVideoUrl(response.data?.video?.videoLink);
@@ -30,7 +31,7 @@ const Video = () => {
 
     const getCommentByVideoId = async () => {
         try {
-            await axios.get(`${BASE_URL}/commentApi/comment/${id}`)
+            await axiosInstance.get(`${BASE_URL}/commentApi/comment/${id}`)
                 .then((response) => {
                     console.log(response);
                     setComments(response.data.comments)
@@ -53,7 +54,7 @@ const Video = () => {
             "message": message,
             "video": id
         }
-        await axios.post(`${BASE_URL}/commentApi/comment`, body, { withCredentials: true }).then((response) => {
+        await axiosInstance.post(`/commentApi/comment`, body, { withCredentials: true }).then((response) => {
             console.log(response)
             const newComment = response.data.comment;
             setComments([...comments, newComment])

@@ -22,8 +22,7 @@ exports.getAllVideo = async (req, res) => {
         const videos = await Video.find().populate('user', 'channelName profilePic userName createdAt');
         
         res.status(201).json({ success: "true", videos: videos });
-        // console.log("Inside All video")
-    } catch (error) {
+     } catch (error) {
         res.status(500).json({ error: 'server error' });
     }
 }
