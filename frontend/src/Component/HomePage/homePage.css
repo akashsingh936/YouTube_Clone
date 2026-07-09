@@ -1,9 +1,10 @@
-  .fullHomePage {
+   .fullHomePage {
     display: flex;
     flex-direction: column;
     
     flex: 1;
     min-height: 100vh;
+    background-color: black;
 }
 
 .homePage {
@@ -14,6 +15,24 @@
     margin-left: 274px;
     min-height: 100vh;
 }
+
+ .loaderBox {
+  position: fixed;           /* Kisi parent ki margin ya position se ise farq nahi padega */
+  top: 50%;                  /* Screen ke vertically beech mein */
+  left: calc(50% + 137px);   /* 274px ka sidebar hai, toh uske hisab se balance karne ke liye */
+  transform: translate(-50%, -50%); /* Perfect center alignment */
+  
+  /* Agar aapka sidebar nahi hai ya aap use count nahi karna chahte, toh left ko sirf 50% bhi rakh sakte hain: */
+  /* left: 50%; */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;              /* Taaki loader sabse upar dikhe */
+}
+
+
+
 
 .homePage_options {
     display: flex;

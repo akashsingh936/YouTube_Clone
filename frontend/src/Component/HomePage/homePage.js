@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+ import React, { useEffect, useState } from 'react';
 import './homePage.css';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { BASE_URL } from '../../App';
 import axiosInstance from '../../config';
+import { RotatingLines } from 'react-loader-spinner';
+
 const HomePage = ({ sideNavbar }) => {
 
   const [data, setData] = useState([]);
@@ -11,24 +12,44 @@ const HomePage = ({ sideNavbar }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    axiosInstance.get(`${BASE_URL}/api/allVideo`).then(res => {
 
-      // console.log("backend Data",res.data.videos);
-      setData(res.data.videos);
-      // console.log(res);
-      setLoading(false)
-    }).catch(error => {
-      setError(error.message)
-      setLoading(false)
-    })
+    setLoading(true);
+
+    axiosInstance
+      .get(`${BASE_URL}/api/allVideo`)
+      .then((res) => {
+        setData(res.data.videos);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setLoading(false);
+      });
+
   }, []);
 
-  const options = ["All", "Twenty20", "Music", "Live", "Mixes", "Gaming", "Detabase", "Pawan Singh", "Democracy", "Comedy", "Live IPL", "Trending Song", "New Songs", "Honey singh", "Pawan Singh",];
-   
+  const options = [
+    "All",
+    "Twenty20",
+    "Music",
+    "Live",
+    "Mixes",
+    "Gaming",
+    "Database",
+    "Pawan Singh",
+    "Democracy",
+    "Comedy",
+    "Live IPL",
+    "Trending Song",
+    "New Songs",
+    "Honey Singh",
+    "Pawan Singh",
+  ];
+
   return (
     <div className={sideNavbar ? 'homePage' : 'fullHomePage'}>
 
+      {/* Top Options */}
       <div className='homePage_options'>
         {
           options.map((item, index) => {
@@ -41,41 +62,92 @@ const HomePage = ({ sideNavbar }) => {
         }
       </div>
 
-
+      {/* Main Videos Section */}
       <div className={sideNavbar ? 'home_mainPage' : 'home_mainPageWithoutLink'}>
-        {error && <p style={{color: "red"}}>{error}</p>}
-        {loading && <p style={{color: "white"}}>Loading please wait...</p>}
+
+        {/* Error */}
+        {error && (
+          <p style={{ color: "red" }}>
+            {error}
+          </p>
+        )}
+
+        {/* Loader */}
         {
-          data?.map((item, ind) => {
-            return (
+          loading ? (
+            <div className='loaderBox'>
+              <RotatingLines
+                strokeColor="red"
+                strokeWidth="5"
+                animationDuration="0.75"
+                width="80"
+                visible={true}
+              />
+            </div>
+          ) : (
 
-              < Link key={ind} to={`/watch/${item._id}`} className='youtube_video'>
+            data?.map((item, ind) => {
+              return (
 
-                <div className='youtube_thumbnailBox'>
-                  <img src={item.thumbnail} alt="Thumnail" className='youtube_thumbnailPic' />
-                  <div className='youtube_timingThumbnail'>
-                    28:05
+                <Link
+                  key={ind}
+                  to={`/watch/${item._id}`}
+                  className='youtube_video'
+                >
+
+                  {/* Thumbnail */}
+                  <div className='youtube_thumbnailBox'>
+                    <img
+                      src={item.thumbnail}
+                      alt="Thumbnail"
+                      className='youtube_thumbnailPic'
+                    />
+
+                    <div className='youtube_timingThumbnail'>
+                      28:05
+                    </div>
                   </div>
-                </div>
 
-                <div className='youtubeTitleBox'>
-                  <div className='youtubeTitleBoxProfile'>
-                    <img src={item?.user?.profilePic} alt='profile' className='youtube_thumbnail_profile' />
+                  {/* Title Box */}
+                  <div className='youtubeTitleBox'>
+
+                    {/* Profile */}
+                    <div className='youtubeTitleBoxProfile'>
+                      <img
+                        src={item?.user?.profilePic}
+                        alt='profile'
+                        className='youtube_thumbnail_profile'
+                      />
+                    </div>
+
+                    {/* Video Details */}
+                    <div className='youtubeTitleBox_Title'>
+
+                      <div className='youtube_videoTitle'>
+                        {item?.title}
+                      </div>
+
+                      <div className='youtube_channelName'>
+                        {item?.user?.channelName}
+                      </div>
+
+                      <div className='youtubeVideo_views'>
+                        {item?.like} likes
+                      </div>
+
+                    </div>
                   </div>
 
-                  <div className='youtubeTitleBox_Title'>
-                    <div className='youtube_videoTitle'>{item?.title}</div>
-                    <div className='youtube_channelName'>{item?.user?.channelName}</div>
-                    <div className='youtubeVideo_views'>{item?.like}31k likes</div>
-                  </div>
-                </div>
-              </Link>
-            );
-          })
+                </Link>
+              );
+            })
+
+          )
         }
+
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default HomePage;
