@@ -12,6 +12,7 @@ import Login from '../Login/login';
 import axios from 'axios';
 import { BASE_URL } from '../../App';
 import axiosInstance from '../../config';
+import { toast } from 'react-toastify';
 
 const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
     const [userPic, setUserPic] = useState("https://www.pngkey.com/png/detail/114-1149847_avatar-unknown-dp.png")
@@ -96,7 +97,7 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
                 <Link to={'/763/upload'}>
                     <VideoCallIcon sx={{ fontSize: "30px", cursor: "pointer", color: "white" }} />
                 </Link>
-                <NotificationsIcon sx={{ fontSize: "30px", cursor: "pointer", color: "white" }} />
+                <NotificationsIcon sx={{ fontSize: "30px", cursor: "pointer", color: "white" }} onClick={()=> toast.info("You haven't recived any notification")} />
                 <img onClick={handleClickModel} src={userPic} className='navbar-right-logo' alt='Logo' />
 
 

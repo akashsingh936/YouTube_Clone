@@ -30,6 +30,8 @@ const Login = ({ setLoginModel }) => {
              
             localStorage.setItem("userId", response.data.user._id)
             localStorage.setItem("userProfilePic", response.data.user.profilePic)
+             console.log(response.data);      // 👈 ye dekho
+    console.log(response.data.token);
             window.location.reload();
         }).catch(error => {
             toast.error("invalid Credentials")
@@ -56,7 +58,7 @@ const Login = ({ setLoginModel }) => {
 
                     <div className='login_buttons'>
                         <div className='login-btn' onClick={handleLoginFun}>Login</div>
-                        <Link to={'/signup'} onClick={() => setLoginModel()} className='login-btn'>Login</Link>
+                        <Link to={'/signup'} onClick={() => setLoginModel()} className='login-btn'>SignUp</Link>
                         <div className='login-btn' onClick={() => setLoginModel()}>Cancel</div>
                     </div>
 

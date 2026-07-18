@@ -1,8 +1,10 @@
 const Video = require('../Modals/video');
 
 exports.uploadVideo = async (req, res) => {
+    console.log("Inside upload");
     try {
-        const { title, description, videoLink, videoType, thumbnail } = req.body
+        const { title, description, videoLink, videoType, thumbnail } = req.body    
+        // console.log(title, description, videoLink, videoType, thumbnail);
 
         const videoUpload = new Video({ user: req.user._id, title, description, videoLink, videoType, thumbnail });
         await videoUpload.save();
@@ -11,7 +13,7 @@ exports.uploadVideo = async (req, res) => {
 
     } catch (error) {
 
-        res.status(500).json({ error: 'server error' });
+        res.status(500).json({ error: error.message});
     }
 }
 

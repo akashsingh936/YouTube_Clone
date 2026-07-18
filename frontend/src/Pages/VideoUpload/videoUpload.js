@@ -13,9 +13,11 @@ const VideoUpload = () => {
     const [loader, setLoader] = useState(false);
     const navigate = useNavigate()
     const handleOnChangeInput = (event, name) => {
-        setInputField({
-            ...inputField, [name]: event.target.value
-        })
+       setInputField((prev) => ({
+    ...prev,
+    [name]: event.target.value
+}));
+
     }
 
     const uploadImage = async (e, type) => {

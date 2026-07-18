@@ -9,6 +9,7 @@ import Profile from './Pages/Profile/profile.js';
 import VideoUpload from './Pages/VideoUpload/videoUpload.js';
 import SignUp from './Pages/SignUp/signUp.js';
 import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
 
 
 export const BASE_URL = process.env.REACT_APP_API_URL;
@@ -25,6 +26,11 @@ function App() {
   return (
     <div className="App">
 
+
+   <>
+      {/* Your Routes */}
+      <ToastContainer position="top-right" autoClose={3000} />
+    </>
       <Navbar setSideNavbarFunc={setSideNavbarFunc} sideNavbar={sideNavbar} />
       <Routes>
         <Route path='/' element={<Home sideNavbar={sideNavbar} />} />
